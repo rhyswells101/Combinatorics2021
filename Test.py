@@ -14,7 +14,4 @@ else:
 if 5==6 :
     print("get this dog i like dog1")
 elif "brown" in dog3:
-    print("get this dog i like dog 2")
-elif "black" in dog1:
-    print("fine i get this one")
 

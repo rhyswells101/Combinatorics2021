@@ -14,4 +14,5 @@ if __name__ == '__main__':
     print_hi('PyCharm')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
-#todo: test 2
+
+#this is something new to test git commit
