@@ -27,5 +27,3 @@ for n, p in enumerate(partition(something), 1): #input:
     # enumerate() method adds counter to an iterable and returns it.
     print(n, sorted(p)) # sorted puts into ascending order.
 
-
-print()

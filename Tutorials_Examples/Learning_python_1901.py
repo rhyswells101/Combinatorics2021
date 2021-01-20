@@ -25,7 +25,7 @@
 # print(abs_li2)
 ##################################################
 #How to import modules
-Print("imported learning_python_1901")
+print("imported learning_python_1901") #use to test that imported correctly.
 test = "test string"
 def find_index(to_search,target): # fins the index for a value in sequence
     for i, value in enumerate(to_search):
