@@ -51,3 +51,4 @@ print(empty)
 iterable = "1234"
 for part in set_partitions(iterable, 2):
     print([''.join(p) for p in part])
+#test
