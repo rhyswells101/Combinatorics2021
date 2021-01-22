@@ -68,7 +68,7 @@ for part in set_partitions(iterable, 2):
 djpair=empty2
 print("The disjoint unions pairs of", nset,"are: \n",djpair, "\n")
 
-### Attempt 1 at counting functions #######################
+################## Attempt 1 at counting functions #######################
 #A full dictionary of values will be called a function: we wish to count those.
 
 #example seed material, for nset=[1,2,3].
@@ -110,7 +110,7 @@ for i in range(1,len(ts_power)):#removed [].
       # print(j)
         item = ts_function0(j)
         dict1 = dict1 | item
-   #USEFUL  print("Initial choice for 2-set values setting",ts_power[i],"value 1 and the other 2-sets value 0   \n",dict1,"\n")
+    print("Initial choice for 2-set values setting",ts_power[i],"value 1 and the other 2-sets value 0   \n",dict1,"\n")
     # for all element in TwoSet setminus ts_power[i] append ts_function(element) to above dictionary
 
 def seed_function(element):
@@ -133,7 +133,7 @@ def seed_function(element):
 
 seed=seed_function([[1, 2], [1, 3]])
 print("We write a given choice of 2-set values for example as: \n",seed)
-############################################################################################
+###########################################################################################
 
 
 ########## Define MSA function condition ##########
