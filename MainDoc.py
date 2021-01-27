@@ -208,7 +208,7 @@ dict_building=seed
 # define m =n globally, do here so dont cause global calucaltion.
 m=4
 for length in range(3,m):
-    for w in ksubsets(length,m): #want to do m+1 to append {[1,2,3,4]:1}
+    for w in ksubsets(length,m): # want to do m+1 to append {[1,2,3,4]:1}
         # w=[1,2,3] # moves through all 3-sets,4-sets..
         new_subset = tuple(w)
         djCombos= djpair_combin_function(w) # put x as set when defing function
@@ -217,22 +217,54 @@ for length in range(3,m):
         for j in range(len(djCombos)):
             x = djCombos[j][0]
             tup_x=tuple(x)  #put tup_k value from seed_function(x)
-            xvalue = seed.get(tup_x) # will need to change from seed to current dict for 4-sets.
+            xvalue = dict_building.get(tup_x) # will need to change from seed to current dict for 4-sets.
             #print(xvalue)
             y=djCombos[j][1]
             tup_y=tuple(y)
-            yvalue = seed.get(tup_y)
+            yvalue = dict_building.get(tup_y)
             minval =xvalue + yvalue
             maxval = xvalue + yvalue +1
             empty_a.append({minval,maxval})
             #print(empty_a)
         Common_value=set.intersection(*empty_a)
-        #print(empty_a)
-        #print(Common_value)
-        new_dict={new_subset: Common_value}
-        #print(new_dict)
-        dict_building=dict_building|new_dict #new empty_a will be a list e.g for [1,2] and [0,1] will get [1], want to form single_dict={(1,2,3),[1]} then append to seed i.e  dict_building=seed|single_dict
+        if Common_value is None:
+            print("This function is not MSA")
+        else:
+            #print(empty_a)
+            #print(Common_value)
+            new_dict={new_subset: Common_value}
+            dict_building=dict_building|new_dict #new empty_a will be a list e.g for [1,2] and [0,1] will get [1], want to form single_dict={(1,2,3),[1]} then append to seed i.e  dict_building=seed|single_dict
+            print(dict_building)
+# append last set {[1,2,3,4]:{values}}
+end= list(range(1,m+1))
+print(end)
+tuple_end=tuple(end)
+djCombos_end = djpair_combin_function(tuple_end)
+print(djCombos_end)# put x as set when defing function
+empty_end = []
+for j in range(len(djCombos_end)):
+    x = djCombos_end[j][0]
+    tup_x = tuple(x)  # put tup_k value from seed_function(x)
+    xvalue = dict_building.get(tup_x)  # will need to change from seed to current dict for 4-sets.
+    # print(xvalue) # addition no defined for {0,1}
+    y = djCombos_end[j][1]
+    tup_y = tuple(y)
+    yvalue = dict_building.get(tup_y) # Issue here that needs to be chioce of values from {values} same for xvalue.
+    minval = xvalue + yvalue
+    maxval = xvalue + yvalue + 1
+    empty_end.append({minval, maxval})
+    print(empty_a)
+Common_value = set.intersection(*empty_end)
+if Common_value is None:
+    print("This function is not MSA")
+else:
+    # print(empty_a)
+    # print(Common_value)
+    new_dict = {tuple_end: Common_value}
+    dict_building = dict_building | new_dict
 print("Data of sheets for given seed choice:\n","num", dict_building,"\n")# not all MSA re add num once added to for loop
 
+#Going to Stop with this method as limitation to n=4 case I want dictionary with integer values not set.
+#Going to move to epsilon method.
 
 
