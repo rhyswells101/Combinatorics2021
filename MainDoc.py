@@ -54,7 +54,7 @@ def ksubsets(integer,n):
     len_r_subsets_Pn = empty3
     return len_r_subsets_Pn[integer-1]
 
-print("I have defined a function that give k subsets of Pn .E.g:\n",ksubsets(2,5),"\n")
+print("I have defined a function that give k subsets of Pn .E.g:\n",ksubsets(2,4),"\n")
 
 #########: Finished: Obj: to give a list of all disjoint unions combination of nset ##############################################################################
 
@@ -86,14 +86,13 @@ print("The disjoint unions pairs of", nset,"are: \n",djpair, "\n")
 
 
 ############# Finished: Give a function that lists of all disjoint unions combination for each x in Pn #############################################################
-#TODO Fix this !! :Why is nset apearing ?
+
 def djpair_combin_function(item):
     # Driver code
     l_st_item = [str(i) for i in item]
     st_item_space = (listToString(l_st_item))
     st_item = st_item_space.replace(' ', '')
     #print(st_item) # do to here fine
-#TODO Find up to here
     iterable = st_item  # string version of nset
     empty2 = []
     for part in set_partitions(iterable, 2): # possilbe issue here
@@ -101,7 +100,7 @@ def djpair_combin_function(item):
         x = ([s1.join(p) for p in part])  # How do store this
         # Convert string element back to list e.g [[1],[2,3,4]]
         # want to put these into list. currently in form x=['1', '2345']
-        print(x)
+        #print(x)
         y = [list((word)) for word in x]
         # print(y)
         empty2.append([[int(i) for i in j] for j in y])  # want to store all and put all into list.
@@ -182,50 +181,58 @@ print("Example: We write a given choice of 2-set values for example as: \n",seed
 
 
 ########## Define MSA function condition ########################################################################################################################################
-
+#Aim: iteratively build functions.
 
 print("\n \n \n Current")
-#moving vertically
-x= [[1,2]] #for i in ts_power: for seed function need to be inside [,] i,e [[1,2]]
-seed = seed_function(x)    # take seed = seed_function(i)
-print(seed)    # try and generate dictionary fully
-    # if has all keys then store, otherwise move onto the next i. Store in list.
-    #iterate through Pn (use AddDict) and use  djpair_combin_function() for subsets for 3-sets, 4-sets...
+
+#Add for loop to get all new functions at end,after appending {[1,2,3,4],{value}}
+# num=0
+# for j in range(0, len(ksubsets(2,2**n))):
+#     for i in combinations(ksubsets(2,n),j):
+#         item = list(i)
+#         num= num+1
+#         #print(num,item)
+#         x=item
+#         seed=seed_function(x) #x= [[1,2]] #for i in ts_power: for seed function need to be inside [,] i,e [[1,2]] # try and generate dictionary fully
+#
+#             # if has all keys then store, otherwise move onto the next i. Store in list.
+#             #iterate through Pn (use AddDict) and use  djpair_combin_function() for subsets for 3-sets, 4-sets...
+#         #def Add_Single_Dict(set): # input elements of Pn
+#         dict_building = seed # wanting to have {[1,2,3]: {1}} and more generaly of the form {[1,2,3]: {0,1}}
+#         #take for i in  [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]].. def function defining.
 
 
-#Moving horizonatlly.
-#def Add_Single_Dict(set): # input elements of Pn
-dictempty = {} # wanting to have {[1,2,3]: 1} and more generaly of the form {[1,2,3]: 0,1}
-#take for i in  [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]].. def function defining.
-w=[1,2,3] # moves through all 3-sets,4-sets..
-djCombos= djpair_combin_function(w) # put x as set when defing function
-print(djCombos)
-    # for j in djCombos:
-    #     for k in djCombos[j]:
-    #         # for all elements in ts_power[i] append ts_function1(element) to dict1.
-    #         var= ts_function1(k)
-    #         dict=dictempty|var
-    #     TwoSets_minus = [e for e in TwoSets if e not in element]
-    #     for j in TwoSets_minus:
-    #         # print(j)
-    #         item = ts_function0(j)
-    #         dict = dict | item
-    #     return dict
-
-print("Hopefully this returns a single dictionary of the for {[1,2,3]: 1}\n",AddDict([1,2,3]))
-# p1 = djpair[0] #  test: set p as first djpair
-
-#def djpair_funcval_0(element): #outputs possible disjoint pair values. Specific to djpair.
-#     element[0],element[1] #call value of each I,J from most uptodate dictionary
-# element[0] + element[1] # next will do element[0] + element[1] +1 with OR condition.
-#either def another function that increments or have in one function.
-#There will be work on comparing dictionaries.
-#print(djpair_funcval_0(p1))
-
-
-# # def msa2_function(element): #Checking function for all djpairs.For subset I irrespective of decomp.
-
-##########: In Progress: Moving vertically : Permuting through seed data #######
+x=[[1,2]]
+seed = seed_function(x)
+dict_building=seed
+# define m =n globally, do here so dont cause global calucaltion.
+m=4
+for length in range(3,m):
+    for w in ksubsets(length,m): #want to do m+1 to append {[1,2,3,4]:1}
+        # w=[1,2,3] # moves through all 3-sets,4-sets..
+        new_subset = tuple(w)
+        djCombos= djpair_combin_function(w) # put x as set when defing function
+        #print(djCombos)
+        empty_a=[]
+        for j in range(len(djCombos)):
+            x = djCombos[j][0]
+            tup_x=tuple(x)  #put tup_k value from seed_function(x)
+            xvalue = seed.get(tup_x) # will need to change from seed to current dict for 4-sets.
+            #print(xvalue)
+            y=djCombos[j][1]
+            tup_y=tuple(y)
+            yvalue = seed.get(tup_y)
+            minval =xvalue + yvalue
+            maxval = xvalue + yvalue +1
+            empty_a.append({minval,maxval})
+            #print(empty_a)
+        Common_value=set.intersection(*empty_a)
+        #print(empty_a)
+        #print(Common_value)
+        new_dict={new_subset: Common_value}
+        #print(new_dict)
+        dict_building=dict_building|new_dict #new empty_a will be a list e.g for [1,2] and [0,1] will get [1], want to form single_dict={(1,2,3),[1]} then append to seed i.e  dict_building=seed|single_dict
+print("Data of sheets for given seed choice:\n","num", dict_building,"\n")# not all MSA re add num once added to for loop
 
 
-#Function = []
+
