@@ -40,7 +40,7 @@ word_freq = {'is': [1, 3, 4, 8, 10],
              'why': [10, 3, 9, 8, 12]}
 # Append multiple values for existing key 'at'
 word_freq = add_values_in_dict(word_freq, 'at', [20, 9, 22])
-#TODO: remove repeats for at. Warning not the same as intersection.
+# remove repeats for at. Warning not the same as intersection.
     # # >>> t
     # # [1, 2, 3, 1, 2, 5, 6, 7, 8]
     # # >>> list(set(t))
@@ -56,7 +56,7 @@ print(word_freq)
 # word_freq = add_values_in_dict(word_freq, 'here', [10, 11, 12])
 # print('Contents of the dictionary: ')
 # print(word_freq)
-#TODO: Change seed data to values in form list.
+#: Change seed data to values in form list.
 
 #How to combine Dictionaries:
 
