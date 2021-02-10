@@ -4,6 +4,9 @@ import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
+import time
+
+start_time = time.time()
 
 fun2_1={(1,):0,(2,):0,(1,2):0}
 fun2_2={(1,):0,(2,):0,(1,2):1}
@@ -23,7 +26,8 @@ P_2=[fun2_1,fun2_2]
 P_3= [fun3_1, fun3_2,fun3_3,fun3_4,fun3_5,fun3_6,fun3_7,fun3_8,fun3_9,fun3_10]
 
 #Done: Put P_3 into into database pandas
-data=pd.DataFrame.from_dict(P_3,orient="columns")
+
+# data=pd.DataFrame.from_dict(P_3,orient="columns")
 #Done:Investigate: how to remove length 1 coulumns
 n=3
 n_1=4
@@ -67,7 +71,6 @@ blank = diff(Pn_1_tup,Pn_tup)
 # print(blank) #used to extnd Pn functions with {key: 0}
 
 
-counter=0
 extensions = []
 for x in P_3:
     copy_no_extension=x.copy() # to get the complement of the extension from keys
@@ -107,23 +110,36 @@ for x in P_3:
     for i in Pn_tup:#For each node we see where we can walk to along edges.
         tree= nx.depth_first_search.dfs_tree(g,i)
         epsilon.append(list(tree.nodes))
-
+    print(epsilon)
     #ii) we now take combinations of paths for all nodes created in i).
     for j in epsilon:
-        T = j
-        T = [list(i) for i in T]
-        for S in epsilon:
-            S = [list(i) for i in S]
-            if S == T:
-                continue
-            elif S != T and len(S) == len(Pn) - 1:  # there wont be anything larger than pn-1
-                continue
-            elif S != T and len(S) < len(Pn) - 1:
-                unionST = T + S
-                res_unionST_0 = [i for n, i in enumerate(unionST) if i not in unionST[:n]]
-                res_unionST = [tuple(i) for i in res_unionST_0]
-                if res_unionST not in epsilon:
-                    epsilon.append(res_unionST)
+        # prelim_epsilon_set_no_rep= [set(i) for n, i in enumerate(epsilon) if i not in epsilon[:n]]
+        # l_prelim_epsilon_no_rep = [list(i) for n, i in enumerate(prelim_epsilon_set_no_rep) if i not in prelim_epsilon_set_no_rep[:n]]
+        # if j in l_prelim_epsilon_no_rep: #Todo: Working on to reduce repetitions.
+        #     continue
+        epsilon_minus=epsilon.copy()
+        epsilon_minus.remove(j)
+        # print("This is epsilion minus j",epsilon_minus)
+        if j in epsilon_minus:
+            continue
+        if len(j)==len(Pn)-1:
+            continue
+        elif len(j)!=len(Pn)-1:
+            print(j)
+            T = j
+            T = [list(i) for i in T]
+            for S in epsilon:
+                S = [list(i) for i in S]
+                if S == T:
+                    continue
+                elif len(S) == len(Pn) - 1:  # there wont be anything larger than pn-1
+                    continue
+                elif S != T and len(S) < len(Pn) - 1:
+                    unionST = T + S
+                    res_unionST_0 = [i for n, i in enumerate(unionST) if i not in unionST[:n]]
+                    res_unionST = [tuple(i) for i in res_unionST_0]
+                    if res_unionST not in epsilon:
+                        epsilon.append(res_unionST)
     epsilon_set = [set(i) for n, i in enumerate(epsilon) if i not in epsilon[:n]]
     epsilon_set.append(x.keys()) # Adding in length EVERYTHING extension.As for fun3_3,fun3_4 & fun3_5 do not have full length extension (See Missing_functions.txt)
     epsilon_set = [set(i) for n, i in enumerate(epsilon_set) if i not in epsilon_set[:n]]
@@ -163,11 +179,12 @@ for x in P_3:
     extensions.extend(extensions_epsilon)
     # print(extensions_epsilon)
     # print(len(extensions_epsilon))
+    print(P_3.index(x)) #print the function that has been done.
 # print(extensions)
-
 
 # todo:pending: sort the order of dictionaryies for database.
 data_ext=pd.DataFrame.from_dict(extensions,orient="columns")
 data_ext_minus = pd.DataFrame(data_ext,columns=Pn_1_tup_db) # power set minus empty and length 1 sets, tunred to tuples
 print(data_ext_minus)
 # data_ext_minus.to_excel(r'C:\Users\RhysL\PycharmProjects\Combinatorics2021\Epsilon_Extensions6.xlsx', index = False)
+print("--- %s seconds ---" % (time.time() - start_time))
