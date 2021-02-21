@@ -1,0 +1,1 @@
+This folder shows the symmetric group action on P_n. A description of the code is in the comments of Group_Action_P_3.py. The files Group_Action_P_4.py and Group_Action_P_5.py are copies with the appropriate edits to extend to the next case. The Databases output raw data which has been analysed in P_4 and P_5 highlighting the characteristics with multiple S_n orbits.
